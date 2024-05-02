@@ -24,12 +24,12 @@ protected void onCreate(Bundle savedInstanceState) {
                 prefEditor.putString("Data", editTxt.getText().toString());
                 prefEditor.apply();
                 confTxt.setText("Saved data!");
-                finish();
+                finish(); // Close activity.(returns to the perv. activity)
             }
         });
     }
 ```
-
+De två aktiviteter delar data genom en fil som skapas av shared preferences som detta fall kallas för "MyPrefs".
 - MainActivity.java
 ```
 protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,7 @@ protected void onCreate(Bundle savedInstanceState) {
         sharedTxt.setText(sharedData);
     }
 ```
+on resume är använd eftersom appen stängs inte när man sparar data.
 ### Bilder:
 
 ![img.png](img.png)
