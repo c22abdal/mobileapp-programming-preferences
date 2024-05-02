@@ -41,4 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String sharedData = sharedPreferences.getString("Data", "No data found!");
+        sharedTxt.setText(sharedData);
+    }
 }
