@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         openPage = findViewById(R.id.openBtn);
 
-        sharedPreferences = getPreferences(MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("MyPrefs",MODE_PRIVATE);
         prefEditor = sharedPreferences.edit();
 
 
