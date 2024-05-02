@@ -3,8 +3,6 @@
 
 **Assignment 6: Shared preferences**
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
 I denna uppgift har jag lärt mig att använda SharedPreferences. Som tillåter data att bli sparat till
 andra aktiviteter. 
 
