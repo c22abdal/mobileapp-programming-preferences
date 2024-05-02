@@ -1,42 +1,71 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+**Assignment 6: Shared preferences**
 
 _Du kan ta bort all text som finns sedan tidigare_.
 
-## Följande grundsyn gäller dugga-svar:
+I denna uppgift har jag lärt mig att använda SharedPreferences. Som tillåter data att bli sparat till
+andra aktiviteter. 
 
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
+- SecondActivity.java
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        editTxt = findViewById(R.id.editTxt);
+        saveBtn = findViewById(R.id.saveBtn);
+        final TextView confTxt = findViewById(R.id.textView2);
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        //prefEditor = sharedPreferences.edit();
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                prefEditor = sharedPreferences.edit();
+                prefEditor.putString("Data", editTxt.getText().toString());
+                prefEditor.apply();
+                confTxt.setText("Saved data!");
+                finish();
+            }
+        });
     }
-}
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+- MainActivity.java
+```
+protected void onCreate(Bundle savedInstanceState) {
 
-![](android.png)
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-Läs gärna:
+        openPage = findViewById(R.id.openBtn);
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+        sharedPreferences = getSharedPreferences("MyPrefs",MODE_PRIVATE);
+        prefEditor = sharedPreferences.edit();
+
+
+        sharedTxt = findViewById(R.id.textView);
+        openPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String sharedData = sharedPreferences.getString("Data", "No data found!");
+        sharedTxt.setText(sharedData);
+    }
+```
+###Bilder:
+
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
